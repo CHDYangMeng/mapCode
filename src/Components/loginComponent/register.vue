@@ -8,6 +8,9 @@
         <el-form-item label="密码:" prop="password" class="label_input">
           <el-input type="password" v-model="ruleForm2.password" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="重复密码:" prop="password" class="label_input">
+          <el-input type="password" v-model="ruleForm2.password" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item class="btn_login">
           <el-button type="primary" @click="submitForm('ruleForm2')">登录</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
@@ -46,10 +49,10 @@ export default {
       },
       rules2: {
         account: [
-          { validator: checkUsername, trigger: 'blur' }
+          { required: true, validator: checkUsername, trigger: 'blur' }
         ],
         password: [
-          { validator: checkPassword, trigger: 'blur' }
+          { required: true, validator: checkPassword, trigger: 'blur' }
         ]
       }
     };

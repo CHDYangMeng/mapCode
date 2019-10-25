@@ -15,8 +15,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.title-Item {
-  font-size: 50px;
-  text-align: center;
+.header {
+  width: 0%;
+  height: 0%;
 }
 </style>
