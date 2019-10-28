@@ -15,8 +15,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.header {
-  width: 0%;
-  height: 0%;
-}
+
 </style>

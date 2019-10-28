@@ -1,6 +1,8 @@
 <template>
   <div class="login-container">
+    <h1 class="title">高速公网交通运行分析系统</h1>
     <div class="login">
+      <p class="login-title"><img src="../../images/人物.png" style="width=30px; height:30px"> 用户登录</p>
       <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
         <el-form-item label="用户名:" prop="account" class="label_input">
           <el-input type="text" v-model="ruleForm2.account" autocomplete="off"></el-input>
@@ -104,10 +106,19 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   overflow: auto;
+  .title {
+    text-align: center;
+    color:azure;
+    font-size: 80px;
+    font-family: 宋体;
+    font-weight: bold;
+    margin: 100px auto auto auto;
+  }
+
 }
 .login {
   width: 400px;
-  height: 170px;
+  height: 250px;
   padding: 13px;
   position: absolute;
   left: 50%;
@@ -116,12 +127,22 @@ export default {
   margin-top: -200px;
   background-color: rgba(240, 255, 255, 0.5);
   border-radius: 10px;
-  text-align: center; 
+  text-align: center;
+
+  .login-title img {
+    margin: 5px;
+    padding: 0px;
+    font-size: 15px;
+    font-family: 宋体;
+    font-weight: bold;
+    vertical-align: middle;
+  }
 }
 .label_input {
   width: 90%;
   font-size: 14px;
   font-family: 宋体;
+  font-weight: bold;
   line-height: 28px;
   text-align: center;
   color: white;

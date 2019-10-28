@@ -24,6 +24,21 @@ import ElementUI from 'element-ui'
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+
+// 设置时间过滤器
+Vue.filter('dateFormat', function(dateStr) {
+  var dt = new Date(dateStr)
+  var y = dt.getFullYear()
+  var m = dt.getMonth() + 1
+  var d = dt.getDate()
+  var h = dt.getHours()
+  var mm = dt.getMinutes()
+  var ss = dt.getSeconds()
+
+  return `${y}-${m}-${d} ${h}:${mm}:${ss}`
+})
+
 var vm = new Vue({
   el: '#index-container',
   data() {
