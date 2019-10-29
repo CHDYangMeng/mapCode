@@ -6,6 +6,13 @@
         <el-col :span="24">
           <div class="grid-content bg-purple-dark">
             <p class="text-image"><img src="./images/changan.png" style="width=90px; height:90px">&nbsp;&nbsp;高速路网交通运行分析系统</p>
+            <el-rate class="text-score"
+            v-model="value" 
+            disabled 
+            show-score 
+            text-color="#ff9900"
+            score-template="{value}">
+            </el-rate>
             <p class="text-version">Chang'an University © 2019.10.28.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Version 1.0.0&nbsp;&nbsp;&nbsp;&nbsp;</p>
           </div>
         </el-col>
@@ -116,6 +123,7 @@ export default {
       account: sessionStorage.getItem("account"),
       activeIndex: '1',
       type: '1-1',
+      value: 2.4,
     }
   },
   created() {
@@ -200,6 +208,15 @@ export default {
     }
     .text-version {
       margin: 0;
+      padding: 0;
+      text-align: right;
+      font-family: 微软雅黑;
+      font-size: 10px;
+      font-weight: bold;
+      color: white;
+    }
+    .text-score {
+      margin: 20px;
       padding: 0;
       text-align: right;
       font-family: 微软雅黑;

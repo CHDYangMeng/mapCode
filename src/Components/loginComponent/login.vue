@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <h1 class="title">高速公网交通运行分析系统</h1>
+    <h1 class="title">高速路网交通运行分析系统</h1>
     <div class="login">
       <p class="login-title"><img src="../../images/人物.png" style="width=30px; height:30px"> 用户登录</p>
       <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
