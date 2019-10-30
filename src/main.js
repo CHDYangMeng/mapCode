@@ -24,7 +24,14 @@ import ElementUI from 'element-ui'
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
+// 引入bootstrap的css样式
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+
+// 引入vue-baidumap API
+import BaiduMap from 'vue-baidu-map'
+Vue.use(BaiduMap, {
+  ak: 'LtwwxQrKmxPlhj1nHrfn8BLdueZ4GpRe'
+})
 
 // 设置时间过滤器
 Vue.filter('dateFormat', function(dateStr) {
