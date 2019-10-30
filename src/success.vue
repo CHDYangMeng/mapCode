@@ -34,39 +34,39 @@
         <el-menu-item></el-menu-item>
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-menu"></i>&nbsp;&nbsp;主页</template>
-          <el-menu-item index="1-1"><i class="el-icon-menu"></i>&nbsp;&nbsp;欢迎页</el-menu-item>
-          <el-menu-item index="1-2"><i class="el-icon-document"></i>&nbsp;&nbsp;控制主页</el-menu-item>
+          <el-menu-item index="1-1"><i class="el-icon-success"></i>&nbsp;&nbsp;欢迎页</el-menu-item>
+          <el-menu-item index="1-2"><i class="el-icon-menu"></i>&nbsp;&nbsp;控制主页</el-menu-item>
         </el-submenu>
-        <el-menu-item index="2">用户管理</el-menu-item>
+        <el-menu-item index="2"><i class="el-icon-edit-outline"></i>&nbsp;&nbsp;用户管理</el-menu-item>
         <el-submenu index="3">
-          <template slot="title">基础信息管理</template>
-          <el-menu-item index="3-1">路网展示</el-menu-item>
-          <el-menu-item index="3-2">道路信息</el-menu-item>
+          <template slot="title"><i class="el-icon-setting"></i>&nbsp;&nbsp;基础信息管理</template>
+          <el-menu-item index="3-1"><i class="el-icon-picture"></i>&nbsp;&nbsp;路网展示</el-menu-item>
+          <el-menu-item index="3-2"><i class="el-icon-document"></i>&nbsp;&nbsp;道路信息</el-menu-item>
           <el-menu-item index="3-3">...</el-menu-item>
         </el-submenu>
         <el-submenu index="4">
-          <template slot="title">交通流数据</template>
-          <el-menu-item index="4-1">交通流基础数据</el-menu-item>
-          <el-menu-item index="4-2">交通流指标参数</el-menu-item>
+          <template slot="title"><i class="el-icon-news"></i>&nbsp;&nbsp;交通流数据</template>
+          <el-menu-item index="4-1"><i class="el-icon-edit"></i>&nbsp;&nbsp;交通流基础数据</el-menu-item>
+          <el-menu-item index="4-2"><i class="el-icon-tickets"></i>&nbsp;&nbsp;交通流指标参数</el-menu-item>
         </el-submenu>
         <el-submenu index="5">
-          <template slot="title">路网运行状态</template>
-          <el-menu-item index="5-1">交通运行状态</el-menu-item>
-          <el-menu-item index="5-2">路网相关路段</el-menu-item>
+          <template slot="title"><i class="el-icon-refresh"></i>&nbsp;&nbsp;路网运行状态</template>
+          <el-menu-item index="5-1"><i class="el-icon-time"></i>&nbsp;&nbsp;交通运行状态</el-menu-item>
+          <el-menu-item index="5-2"><i class="el-icon-location-outline"></i>&nbsp;&nbsp;路网相关路段</el-menu-item>
         </el-submenu>
         <el-submenu index="6">
-          <template slot="title">交通运行状态预测</template>
-          <el-menu-item index="6-1">运行状态预测</el-menu-item>
+          <template slot="title"><i class="el-icon-bell"></i>&nbsp;&nbsp;交通运行状态预测</template>
+          <el-menu-item index="6-1"><i class="el-icon-loading"></i>&nbsp;&nbsp;运行状态预测</el-menu-item>
         </el-submenu>
 
-        <el-menu-item index="7"><a href="http://baidu.com" target="_blank" rel="noopener noreferrer">联系我们</a></el-menu-item>
+        <el-menu-item index="7"><a href="http://baidu.com" target="_blank" rel="noopener noreferrer"><i class="el-icon-phone"></i>&nbsp;&nbsp;联系我们</a></el-menu-item>
         <el-submenu index="8" class="userInfo-container">
           <template slot="title">用户：{{account}}</template>
           <el-menu-item index="8-1"><i class="el-icon-view"></i>&nbsp;&nbsp;个人信息</el-menu-item>
-          <el-menu-item index="8-2"><i class="el-icon-info"></i>&nbsp;&nbsp;修改密码</el-menu-item>
+          <el-menu-item index="8-2"><i class="el-icon-edit"></i>&nbsp;&nbsp;修改密码</el-menu-item>
           <el-menu-item index="8-3" @click="outer()"><i class="el-icon-delete"></i>&nbsp;&nbsp;退出</el-menu-item>
         </el-submenu>
-        <el-menu-item class="userInfo-container">日期：{{date | dateFormat}}</el-menu-item>
+        <el-menu-item class="userInfo-container"><i class="el-icon-date"></i>&nbsp;&nbsp;日期：{{date | dateFormat}}</el-menu-item>
       </el-menu>
       <!-- 引入模块
       引入主页模块 mianComponent -->
@@ -152,7 +152,6 @@ export default {
       sessionStorage.setItem('account', '')
     },
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
       this.type = key;
     },
     notice(title,message,type) {
