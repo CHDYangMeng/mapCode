@@ -123,7 +123,7 @@ export default {
       account: sessionStorage.getItem("account"),
       activeIndex: '1',
       type: '1-1',
-      value: 2.4,
+      value: 2.6,
     }
   },
   created() {

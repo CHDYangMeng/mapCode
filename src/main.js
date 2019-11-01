@@ -30,7 +30,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 // 引入vue-baidumap API
 import BaiduMap from 'vue-baidu-map'
 Vue.use(BaiduMap, {
-  ak: 'LtwwxQrKmxPlhj1nHrfn8BLdueZ4GpRe'
+  ak: '***'
 })
 
 // 设置时间过滤器
