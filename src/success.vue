@@ -13,11 +13,22 @@
             text-color="#ff9900"
             score-template="{value}">
             </el-rate>
-            <p class="text-version">Chang'an University © 2019.10.28.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Version 1.0.0&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            <p class="text-version">Chang'an University © 2019.10.28.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Version 1.0.0&nbsp;&nbsp;&nbsp;&nbsp;<el-badge :value=value_mesIndex class="item"><el-button @click="drawer = true" type="warning" icon="el-icon-setting" circle></el-button></el-badge>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
           </div>
         </el-col>
       </el-row>
     </div>
+    <!-- 跳出界面 -->
+    <el-drawer
+    title="日期和通知"
+    :visible.sync="drawer"
+    :direction="direction"
+    :before-close="handleClose">
+      <span>日期</span>
+      <el-calendar v-model="date_value">
+      </el-calendar>
+      <span>通知</span>
+    </el-drawer>
     <!-- main -->
     <div class="main">
       <el-menu
@@ -61,7 +72,7 @@
 
         <el-menu-item index="7"><a href="http://baidu.com" target="_blank" rel="noopener noreferrer"><i class="el-icon-phone"></i>&nbsp;&nbsp;联系我们</a></el-menu-item>
         <el-submenu index="8" class="userInfo-container">
-          <template slot="title">用户：{{account}}</template>
+          <template slot="title"><el-avatar> {{account}} </el-avatar></template>
           <el-menu-item index="8-1"><i class="el-icon-view"></i>&nbsp;&nbsp;个人信息</el-menu-item>
           <el-menu-item index="8-2"><i class="el-icon-edit"></i>&nbsp;&nbsp;修改密码</el-menu-item>
           <el-menu-item index="8-3" @click="outer()"><i class="el-icon-delete"></i>&nbsp;&nbsp;退出</el-menu-item>
@@ -124,6 +135,13 @@ export default {
       activeIndex: '1',
       type: '1-1',
       value: 2.6,
+
+      drawer: false,
+      direction: 'rtl',
+
+      date_value: new Date(),
+
+      value_mesIndex: 4
     }
   },
   created() {
