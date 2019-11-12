@@ -180,6 +180,9 @@ export default {
         duration: 4000,
       });
     },
+    handleClose() {
+
+    },
   },
   components: {
     'welcome': welcome,

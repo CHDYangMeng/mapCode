@@ -6,10 +6,10 @@
           <div class="content">
             <div class="introduce">
               <div class="title">
-                交通运行状态评价参数介绍
+                交通运行状态评价指标介绍
               </div>
               <div class="details">
-                <p>路网内容介绍</p>
+                <p>具体指标介绍</p>
               </div>
             </div>
             <div>
@@ -40,16 +40,67 @@
         </el-col>
         <el-col :span="16">
           <div class="bm-title">
-            待研究的高速路网图
+            交通运行状态评价指标
           </div>
-          <baidu-map 
-          class="bm-view" 
-          :center="center"
-          :zoom="zoom"
-          @ready="handler"></baidu-map>
+          
+          <!-- 数据表 -->
+          <el-table
+          :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+          border
+          style="width: 100%">
+            <el-table-column
+              fixed
+              prop="point"
+              sortable
+              label="检测器"
+              align="center">
+            </el-table-column>
+            <el-table-column
+              label="时间"
+              sortable 
+              prop="time"
+              align="center">
+              <template slot-scope="scope">
+                <span>{{scope.row.time | dateFormat}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="flow"
+              sortable
+              label="交通流量"
+              align="center">
+            </el-table-column>
+            <el-table-column
+              prop="avgtime"
+              sortable
+              label="平均形成时间"
+              align="center">
+            </el-table-column>
+            <el-table-column
+              prop="avgspeed"
+              sortable
+              label="平均行程速度"
+              align="center">
+            </el-table-column>
+            <el-table-column
+              prop="occupancy"
+              sortable
+              label="占有率"
+              align="center">
+            </el-table-column>
+          </el-table>
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-sizes="[5, 10, 20, 50]" 
+            :page-size="pagesize"         
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="tableData.length"
+            background> 
+          </el-pagination>
         </el-col>
       </el-row>
-      
     </div>
   </div>
 </template>
@@ -58,39 +109,53 @@
 export default {
   data() {
     return {
-      // 地图控制
-      center: {
-        lng: 0,
-        lat: 0
-      },
-      zoom: 3,
-
-      // 级联框控制
-      options1: [],
-      value_options1: '',
-      options2: [],
-      value_options2: '',
-
       // 表格
       tableData: [],
-      cols: [],
+      // 分页插件
+      currentPage: 1,
+      pagesize: 10,
     }
   },
 
   created() {
-    this.getRoadName();
-    
+    this.getIndexData(); 
   },
 
   methods: {
-    // 地图控件
-    handler({BMap, map}) {
-      console.log(BMap,map);
-      // 108.95263,34.276352
-      this.center.lng = 108.95263;
-      this.center.lat = 34.276352;
-      this.zoom = 15
-    },   
+     // 获取页面、页码、每页数量
+    handleSizeChange(size) {
+      this.pagesize = size;
+      console.log(this.pagesize)  //每页下拉显示数据
+    },
+    handleCurrentChange(currentPage) {
+      this.currentPage = currentPage;
+      console.log(this.currentPage)  //点击第几页
+    },
+
+    // 获取数据
+    getIndexData() {
+      this.$http.post('getIndexData').then( result => {
+        console.log(result);
+        if (result.body.status == 200) {
+          var indexData = result.body.indexData;
+          var tableData = [];
+          for (var i = 0; i < indexData.length; i++) {
+            var element = indexData[i];
+            tableData.push({
+              point: element.point,
+              time: element.time,
+              flow: element.flow,
+              avgtime: element.avgtime,
+              avgspeed: element.avgspeed,
+              occupancy: element.occupancy
+            }) 
+          }
+        } else {
+          console.log("获取数据失败");
+        }
+        this.tableData = tableData;
+      })
+    },
   }
 }
 </script>
