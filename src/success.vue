@@ -182,6 +182,7 @@ export default {
     },
     handleClose() {
       console.log("点击了关闭");
+      console.log("点击了关闭!!");
     },
   },
   components: {
