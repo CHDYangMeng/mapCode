@@ -180,9 +180,9 @@ export default {
         duration: 4000,
       });
     },
-    handleClose() {
+    handleClose(done) {
       console.log("点击了关闭");
-      console.log("点击了关闭!!");
+      done();
     },
   },
   components: {
