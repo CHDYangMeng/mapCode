@@ -42,13 +42,12 @@
         <el-menu-item></el-menu-item>
         <el-menu-item></el-menu-item>
         <el-menu-item></el-menu-item>
-        <el-menu-item></el-menu-item>
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-menu"></i>&nbsp;&nbsp;主页</template>
+          <template slot="title"><i class="el-icon-s-home"></i>&nbsp;&nbsp;主页</template>
           <el-menu-item index="1-1"><i class="el-icon-success"></i>&nbsp;&nbsp;欢迎页</el-menu-item>
           <el-menu-item index="1-2"><i class="el-icon-menu"></i>&nbsp;&nbsp;控制主页</el-menu-item>
         </el-submenu>
-        <el-menu-item index="2"><i class="el-icon-edit-outline"></i>&nbsp;&nbsp;用户管理</el-menu-item>
+        <el-menu-item index="2"><i class="el-icon-s-tools"></i>&nbsp;&nbsp;用户管理</el-menu-item>
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-setting"></i>&nbsp;&nbsp;基础信息管理</template>
           <el-menu-item index="3-1"><i class="el-icon-picture"></i>&nbsp;&nbsp;路网展示</el-menu-item>
@@ -56,26 +55,26 @@
           <el-menu-item index="3-3">...</el-menu-item>
         </el-submenu>
         <el-submenu index="4">
-          <template slot="title"><i class="el-icon-news"></i>&nbsp;&nbsp;交通流数据</template>
-          <el-menu-item index="4-1"><i class="el-icon-edit"></i>&nbsp;&nbsp;交通流基础数据</el-menu-item>
+          <template slot="title"><i class="el-icon-folder"></i>&nbsp;&nbsp;交通流数据</template>
+          <el-menu-item index="4-1"><i class="el-icon-data-board"></i>&nbsp;&nbsp;交通流基础数据</el-menu-item>
           <el-menu-item index="4-2"><i class="el-icon-tickets"></i>&nbsp;&nbsp;交通流指标参数</el-menu-item>
         </el-submenu>
         <el-submenu index="5">
           <template slot="title"><i class="el-icon-refresh"></i>&nbsp;&nbsp;路网运行状态</template>
-          <el-menu-item index="5-1"><i class="el-icon-time"></i>&nbsp;&nbsp;交通运行状态</el-menu-item>
-          <el-menu-item index="5-2"><i class="el-icon-location-outline"></i>&nbsp;&nbsp;路网相关路段</el-menu-item>
+          <el-menu-item index="5-1"><i class="el-icon-time"></i>&nbsp;&nbsp;交通运行状态划分</el-menu-item>
+          <el-menu-item index="5-2"><i class="el-icon-map-location"></i>&nbsp;&nbsp;路网相关路段</el-menu-item>
+          <el-menu-item index="5-3"><i class="el-icon-finished"></i>&nbsp;&nbsp;交通运行状态预测</el-menu-item>
         </el-submenu>
         <el-submenu index="6">
-          <template slot="title"><i class="el-icon-bell"></i>&nbsp;&nbsp;交通运行状态预测</template>
-          <el-menu-item index="6-1"><i class="el-icon-loading"></i>&nbsp;&nbsp;运行状态预测</el-menu-item>
+          <template slot="title"><i class="el-icon-s-promotion"></i>&nbsp;&nbsp;路网综合评价</template>
+          <el-menu-item index="6-1"><i class="el-icon-finished"></i>&nbsp;&nbsp;路网综合评价</el-menu-item>
         </el-submenu>
-
         <el-menu-item index="7"><a href="http://baidu.com" target="_blank" rel="noopener noreferrer"><i class="el-icon-phone"></i>&nbsp;&nbsp;联系我们</a></el-menu-item>
         <el-submenu index="8" class="userInfo-container">
           <template slot="title"><el-avatar> {{account}} </el-avatar></template>
-          <el-menu-item index="8-1"><i class="el-icon-view"></i>&nbsp;&nbsp;个人信息</el-menu-item>
+          <el-menu-item index="8-1"><i class="el-icon-user-solid"></i>&nbsp;&nbsp;个人信息</el-menu-item>
           <el-menu-item index="8-2"><i class="el-icon-edit"></i>&nbsp;&nbsp;修改密码</el-menu-item>
-          <el-menu-item index="8-3" @click="outer()"><i class="el-icon-delete"></i>&nbsp;&nbsp;退出</el-menu-item>
+          <el-menu-item index="8-3" @click="outer()"><i class="el-icon-switch-button"></i>&nbsp;&nbsp;退出</el-menu-item>
         </el-submenu>
         <el-menu-item class="userInfo-container"><i class="el-icon-date"></i>&nbsp;&nbsp;日期：{{date | dateFormat}}</el-menu-item>
       </el-menu>
@@ -95,7 +94,9 @@
       <condition v-else-if="type === '5-1'"></condition>
       <relevantRoad v-else-if="type === '5-2'"></relevantRoad>
       <!-- 引入交通运行状态预测模块 predictComponent -->
-      <predictCondition v-else-if="type === '6-1'"></predictCondition>
+      <predictCondition v-else-if="type === '5-3'"></predictCondition>
+      <!-- 引入路网交通运行状态综合评估模块 evaluate -->
+      <evaluate v-else-if="type === '6-1'"></evaluate>
       <div v-else></div>
 
     </div>
@@ -124,7 +125,9 @@ import trafficIndex from './Components/trafficeDataComponent/trafficIndex.vue'
 import condition from './Components/conditionComponent/condition.vue'
 import relevantRoad from './Components/conditionComponent/relevantRoad.vue'
 // 引入交通运行状态预测模块 predictComponent
-import predictCondition from './Components/predictComponent/predictCondition.vue'
+import predictCondition from './Components/conditionComponent/predictCondition.vue'
+// 引入路网交通运行状态综合评估模块 evaluate
+import evaluate from './Components/compositeComponent/evaluate.vue'
 
 
 export default {
@@ -195,7 +198,8 @@ export default {
     'trafficIndex': trafficIndex,
     'condition': condition,
     'relevantRoad': relevantRoad,
-    'predictCondition': predictCondition
+    'predictCondition': predictCondition,
+    'evaluate': evaluate
   }
   
 }

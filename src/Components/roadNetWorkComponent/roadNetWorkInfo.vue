@@ -37,6 +37,7 @@ export default {
       // 分页插件
       currentPage: 1,
       pagesize: 10,
+
     } 
   },
   created() {
@@ -62,10 +63,10 @@ export default {
           var cols = [];
           for (var key in tableData[0]) {
             var title = '';
-            if (key == 'point') {
-              title = '检测器';
-            } else if (key == 'road') {
+            if (key == 'road') {
               title = '路段编号';
+            } else if (key == 'point') {
+              title = '检测器';
             } else if (key == 'length') {
               title = '路段长度';
             } else if (key == 'roadWidth') {
@@ -87,6 +88,7 @@ export default {
         }
       })
     },
+    
   }
 }
 </script>
