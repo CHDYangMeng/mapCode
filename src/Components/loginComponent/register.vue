@@ -1,18 +1,24 @@
 <template>
   <div class="login-container">
     <div class="login">
-      <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+      <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="120px" class="demo-ruleForm">
         <el-form-item label="用户名:" prop="account" class="label_input">
           <el-input type="text" v-model="ruleForm2.account" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码:" prop="password" class="label_input">
           <el-input type="password" v-model="ruleForm2.password" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="重复密码:" prop="password" class="label_input">
-          <el-input type="password" v-model="ruleForm2.password" autocomplete="off"></el-input>
+        <el-form-item label="重复密码:" prop="password_two" class="label_input">
+          <el-input type="password" v-model="ruleForm2.password_two" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="电话:" prop="phone" class="label_input">
+          <el-input type="phone" v-model="ruleForm2.phone" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱:" prop="email" class="label_input">
+          <el-input type="email" v-model="ruleForm2.email" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item class="btn_login">
-          <el-button type="primary" @click="submitForm('ruleForm2')">登录</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm2')">注册</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -42,10 +48,20 @@ export default {
         }
       },1000);
     };
+    var checkPassword_two = (rule, value, callback) => {
+      if (value === this.ruleForm2.password) {
+        callback();
+      } else {
+        callback(new Error('密码不一致'));
+      }
+    }
     return {
       ruleForm2: {
         account: '',
-        password: ''
+        password: '',
+        password_two: '',
+        phone: '',
+        email: '',
       },
       rules2: {
         account: [
@@ -53,7 +69,11 @@ export default {
         ],
         password: [
           { required: true, validator: checkPassword, trigger: 'blur' }
-        ]
+        ],
+        password_two: [
+          { required: true, validator: checkPassword, trigger: 'blur' },
+          { required: true, validator: checkPassword_two, trigger: 'blur' }
+        ],
       }
     };
   },
@@ -61,19 +81,17 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$http.post('login-check',{account: this.ruleForm2.account, password: this.ruleForm2.password}).then(result => {
+          this.$http.post('user-insert',{account: this.ruleForm2.account, password: this.ruleForm2.password, phone: this.ruleForm2.phone, email: this.ruleForm2.email}).then(result => {
             console.log(result)
             if (result.body.status == 200) {
-              sessionStorage.setItem('account',result.body.account);
+              console.log(result.body.message)
+              this.notice("成功","注册成功","success");
+              this.$router.push('/login');
+            } else {
               console.log(result.body.account)
-              this.notice("成功","登录成功","success");
-              this.$router.push('/success');
-            } else if (result.body.status == 201) {
-              console.log(result.body.account)
-              this.notice("失败","密码错误","error");
+              this.notice("失败","注册失败","error");
             } 
           },result => {
-            console.log(result.message);
             this.notice("失败","网络连接错误","error");
             
           })
@@ -109,8 +127,8 @@ export default {
   overflow: auto;
 }
 .login {
-  width: 400px;
-  height: 170px;
+  width: 450px;
+  height: 400px;
   padding: 13px;
   position: absolute;
   left: 50%;

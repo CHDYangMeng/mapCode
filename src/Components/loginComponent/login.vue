@@ -9,7 +9,12 @@
         </el-form-item>
         <el-form-item label="密码:" prop="password" class="label_input">
           <el-input type="password" v-model="ruleForm2.password" autocomplete="off"></el-input>
+          <div class="demo_a">
+            <a href="/#/setPassword" style="font-size: 8px;">忘记密码？</a>
+            <a href="/#/register" style="font-size: 8px;">点击注册</a>
+          </div>
         </el-form-item>
+        
         <el-form-item class="btn_login">
           <el-button type="primary" @click="submitForm('ruleForm2')">登录</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
@@ -118,7 +123,7 @@ export default {
 }
 .login {
   width: 400px;
-  height: 250px;
+  height: 300px;
   padding: 13px;
   position: absolute;
   left: 50%;
@@ -149,6 +154,13 @@ export default {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
+.demo_a {
+  margin: 0px;
+  padding: 0px;
+  font-size: 8px;
+  font-family: 宋体;
+}
+
 .btn_login {
   width: 90%;
   font-size: 14px;

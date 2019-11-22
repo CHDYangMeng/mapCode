@@ -5,11 +5,14 @@
         <el-form-item label="用户名:" prop="account" class="label_input">
           <el-input type="text" v-model="ruleForm2.account" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="密码:" prop="password_old" class="label_input">
+          <el-input type="password" v-model="ruleForm2.password_old" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item label="密码:" prop="password" class="label_input">
           <el-input type="password" v-model="ruleForm2.password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item class="btn_login">
-          <el-button type="primary" @click="submitForm('ruleForm2')">登录</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm2')">修改</el-button>
           <el-button @click="resetForm('ruleForm2')">重置</el-button>
         </el-form-item>
       </el-form>
@@ -42,13 +45,17 @@ export default {
     return {
       ruleForm2: {
         account: '',
-        password: ''
+        password: '',
+        password_old: '',
       },
       rules2: {
         account: [
           { validator: checkUsername, trigger: 'blur' }
         ],
         password: [
+          { validator: checkPassword, trigger: 'blur' }
+        ],
+        password_old: [
           { validator: checkPassword, trigger: 'blur' }
         ]
       }
@@ -58,16 +65,24 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$http.post('login-check',{account: this.ruleForm2.account, password: this.ruleForm2.password}).then(result => {
+          this.$http.post('login-check',{account: this.ruleForm2.account, password: this.ruleForm2.password_old}).then(result => {
             console.log(result)
             if (result.body.status == 200) {
-              sessionStorage.setItem('account',result.body.account);
-              console.log(result.body.account)
-              this.notice("成功","登录成功","success");
-              this.$router.push('/success');
+              this.$http.post('update_password',{account: this.ruleForm2.account, password: this.ruleForm2.password}).then(result => {
+                console.log(result)
+                if (result.body.status == 200) {
+                  this.notice("成功","修改成功","success");
+                  this.$router.push('/login');
+                } else if (result.body.status == 201) {
+                  this.notice("失败","修改失败，用户名不存在","error");
+                } 
+              },result => {
+              console.log(result.message);
+              this.notice("失败","网络连接错误","error");
+              
+              })
             } else if (result.body.status == 201) {
-              console.log(result.body.account)
-              this.notice("失败","密码错误","error");
+              this.notice("失败","用户名不存在","error");
             } 
           },result => {
             console.log(result.message);
@@ -107,7 +122,7 @@ export default {
 }
 .login {
   width: 400px;
-  height: 170px;
+  height: 200px;
   padding: 13px;
   position: absolute;
   left: 50%;
