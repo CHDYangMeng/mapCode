@@ -33,9 +33,9 @@
             </el-date-picker>
           </div>
           <div class="demo2">
-            <el-button class="demo_btn" type="primary">天</el-button>
-            <el-button class="demo_btn" type="primary">周</el-button>
-            <el-button class="demo_btn" type="primary">月</el-button>
+            <el-button class="demo_btn" type="primary" @click="getDayData">天</el-button>
+            <el-button class="demo_btn" type="primary" @click="getWeekData">周</el-button>
+            <el-button class="demo_btn" type="primary" @click="getMonthData">月</el-button>
           </div> 
         </div>
         <div id="chart" style="height: 500px;" ref="barchart"></div>
@@ -138,6 +138,7 @@ export default {
         label: '占有率',
         value: 'occupancy'
       }],
+      dialog_value_option_index: '',
       // 日期选择
       date_value: '',
     }
@@ -222,7 +223,142 @@ export default {
         }
         this.tableData = tableData;
       })
-    },  
+    },
+      //弹出层函数
+    dialog_changeSelect_index(dialog_value_option_index) {
+      this.dialog_value_option_index = dialog_value_option_index;
+      console.log(dialog_value_option_index);
+    },
+    // 获取数据
+    // 获取天的数据
+    getDayData() {
+      var time = this.dateToString(this.date_value);
+      this.$http.post('getDayData', {point:this.value_options, time:time}).then( result => {
+        console.log(result);
+        if (result.body.status == 200) {
+          var pointData = result.body.pointData;
+          var xAxis_data = [];
+          var series_data = [];
+          var series_name = '';
+          for (let i = 0; i < pointData.length; i++) {
+            xAxis_data.push(pointData[i].time);
+            if (this.dialog_value_option_index == 'flow') {
+              series_data.push(pointData[i].flow);
+              series_name = '交通流量';
+            } else if (this.dialog_value_option_index == 'speed') {
+              series_data.push(pointData[i].speed);
+              series_name = '速度';
+            } else if (this.dialog_value_option_index == 'occupancy') {
+              series_data.push(pointData[i].occupancy);
+              series_name = '占有率';
+            }
+          }
+          this.xAxis_data = xAxis_data;
+          this.series_data = series_data;
+          this.series_name = series_name;
+        } else {
+          console.log("获取数据失败");
+        }
+        setTimeout(() => {
+          this.$nextTick(() => this.chart());
+        },0);
+      })
+    },
+    // 获取周的数据
+    getWeekData() {
+      var time = this.dateToString(this.date_value);
+      this.$http.post('getWeekData', {point:this.value_options,time:time}).then( result => {
+        console.log(result);
+        if (result.body.status == 200) {
+          var pointData = result.body.pointData;
+          var xAxis_data = [];
+          var series_data = [];
+          var series_name = '';
+          for (let i = 0; i < pointData.length; i++) {
+            xAxis_data.push(pointData[i].time);
+            if (this.dialog_value_option_index == 'flow') {
+              series_data.push(pointData[i].flow);
+              var series_name = '交通流量';
+            } else if (this.dialog_value_option_index == 'speed') {
+              series_data.push(pointData[i].speed);
+              var series_name = '速度';
+            } else if (this.dialog_value_option_index == 'occupancy') {
+              series_data.push(pointData[i].occupancy);
+              var series_name = '占有率';
+            }
+          }
+        } else {
+          console.log("获取数据失败");
+        }
+        this.xAxis_data = xAxis_data;
+        this.series_data = series_data;
+        this.series_name = series_name;
+        setTimeout(() => {
+        this.$nextTick(() => this.chart());
+      },0);
+      })
+    },
+    // 获取月的数据
+    getMonthData() {
+      var time = this.dateToString(this.date_value);
+      this.$http.post('getMonthData', {point:this.value_options,time:time}).then( result => {
+        console.log(result);
+        if (result.body.status == 200) {
+          var pointData = result.body.pointData;
+          var xAxis_data = [];
+          var series_data = [];
+          for (let i = 0; i < pointData.length; i++) {
+            xAxis_data.push(pointData[i].time);
+            if (this.dialog_value_option_index == 'flow') {
+              series_data.push(pointData[i].flow);
+              var series_name = '交通流量';
+            } else if (this.dialog_value_option_index == 'speed') {
+              series_data.push(pointData[i].speed);
+              var series_name = '速度';
+            } else if (this.dialog_value_option_index == 'occupancy') {
+              series_data.push(pointData[i].occupancy);
+              var series_name = '占有率';
+            }
+          }
+        } else {
+          console.log("获取数据失败");
+        }
+        this.xAxis_data = xAxis_data;
+        this.series_data = series_data;
+        this.series_name = series_name;
+        setTimeout(() => {
+        this.$nextTick(() => this.chart());
+      },0);
+      })
+    },
+
+    // 时间转换
+    dateToString(date){ 
+      var year = date.getFullYear(); 
+      var month =(date.getMonth() + 1).toString(); 
+      var day = (date.getDate()).toString();  
+      var hour = (date.getHours()).toString();
+      var minutes = (date.getMinutes()).toString();
+      var seconds = (date.getSeconds()).toString();
+      if (month.length == 1) { 
+          month = "0" + month; 
+      } 
+      if (day.length == 1) { 
+          day = "0" + day; 
+      }
+      if (hour.length == 1) {
+        hour = "0" + hour;
+      }
+      if (minutes.length == 1) {
+        minutes = "0" + minutes;
+      }
+      if (hour.length == 1) {
+        seconds = "0" + seconds;
+      }
+      var dateTime = year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+      return dateTime; 
+    },
+
     // 绘图
     open() {
       setTimeout(() => {
@@ -230,16 +366,23 @@ export default {
       },0); 
     },
     plot() {
-      this.dialogChartVisible = true;
-      
+      this.dialogChartVisible = true; 
     },
     chart() {
       var chart = echarts.init(document.getElementById('chart'));
       var option = {
-          title:{},
+          title:{
+            text: "交通流参数特性曲线图",
+            x:'center',
+            y:'top',
+            textAlign:'center'
+          },
           tooltip:{},
-          legend:{},
+          legend:{
+            left:'right'
+          },
           xAxis: {
+            type: 'category',
             data: this.xAxis_data,
           },
           yAxis:{
@@ -253,6 +396,7 @@ export default {
               normal: {
                 label: {
                   show: true,
+                  smooth: true,
                   position: 'top',
                   textStyle: {
                     color: 'black',
