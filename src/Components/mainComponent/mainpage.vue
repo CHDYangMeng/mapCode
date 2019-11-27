@@ -9,7 +9,7 @@
                 待研究地区路网介绍
               </div>
               <div class="details">
-                <p>路网内容介绍</p>
+                <a>路网内容介绍</a>
               </div>
             </div>
             <div class="item">
@@ -58,11 +58,14 @@
           <div class="bm-title">
             待研究的高速路网图
           </div>
-          <baidu-map 
+          <div class="bm-view">
+            <iframe class="bm-view" :src="url" frameborder="0"></iframe>
+          </div>
+          <!-- <baidu-map 
           class="bm-view" 
           :center="center"
           :zoom="zoom"
-          @ready="handler"></baidu-map>
+          @ready="handler"></baidu-map> -->
         </el-col>
       </el-row>
       
@@ -71,6 +74,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -90,6 +94,8 @@ export default {
       // 表格
       tableData: [],
       cols: [],
+
+      url: 'src/Components/htmlComponent/NetWork.html',
     }
   },
 
@@ -182,7 +188,7 @@ export default {
         this.cols = cols;
       })
     }
-  }
+  },
 }
 </script>
 
@@ -235,7 +241,7 @@ export default {
     .details {
       margin: 4px;
       padding: 4px;
-      p {
+      a {
         // font-family: 楷体;
         font-size: 18px;
       }
