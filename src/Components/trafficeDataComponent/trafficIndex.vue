@@ -9,30 +9,33 @@
                 交通运行状态评价指标介绍
               </div>
               <div class="details">
-                <p>具体指标介绍</p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  在交通运行状态判别过程中，大多数研究均采用最基本的交通流三参数中的一个或几个参数来进行交通运行状态的判别。
+                  而这三个参数均为交通流的动态参数，缺少与之相对应的道路静态参数，从而使得交通运行状态缺乏针对性。
+                  结合交通流的静态参数与动态参数，选取了交通流量指标、平均行程时间指标、平均行程速度指标和平均延误时间指标等指标进行交通运行状态的评价指标，其中交通流量可以从原始数据中获取。</p>
               </div>
             </div>
-            <div>
-              <el-tabs tab-position="left" style="height: 200px;">
+            <div class="index">
+              <el-tabs tab-position="left" style="height: 320px;">
                 <el-tab-pane label="交通流量">
                   <p>交通流量是指单位时间内通过道路某一点或者断面的车辆数，是判别交通状态的主要指标，其表达式为：</p> 
-                  <div><img src="*"></div>
-                  <p></p>
+                  <div align="center"><img src="../../images/交通流量.png"></div>
+                  <p>式中，q表示交通流量，veh/h；T表示观察时间长度，h；N表示在观察时间内通过断面的车辆数，veh。</p>
                 </el-tab-pane>
                 <el-tab-pane label="平均行程时间">
                   <p>平均行程时间是指通过某一段道路的所有车辆行程时间的平均值，其表达式为：</p>
-                  <div><img src="*"></div>
-                  <p></p>
+                  <div align="center"><img src="../../images/平均行程时间.png"></div>
+                  <p>式中，t-表示平均行程时间，h； ti表示车辆i通过观测道路所用的时间，h； 表示观测道路通过车辆数。</p>
                 </el-tab-pane>
                 <el-tab-pane label="平均行程速度">
                   <p>平均行程速度是指道路长度与通过该路段所有车辆的平均行程时间的比值，平均行程速度值的大小是出行者对交通拥挤状态的最直观的感受之一，直接反映了路段的交通状况，其表达式为：</p>
-                  <div><img src="*"></div>
-                  <p></p>
+                  <div align="center"><img src="../../images/平均行程速度.png"></div>
+                  <p>式中，v-表示平均行程速度，km/h；vi表示道路i的行程车速，km/h；li表示道路i的长度，km；Vi表示道路i的交通流量，veh；n表示路段数量。</p>
                 </el-tab-pane>
-                <el-tab-pane label="占有率">
-                  <p>占有率是指某一瞬间内，单位道路长度上的车辆数，其表达式为：</p>
-                  <div><img src="*"></div>
-                  <p></p>
+                <el-tab-pane label="平均延误时间">
+                  <p>平均延误时间是指车辆通过某一段道路实际通行时间与车辆在自由流状态下的通行时间之间平均时间损失，常用于描述道路的运行效率和服务能力，其表达式为：</p>
+                  <div align="center"><img src="../../images/平均延误时间.png"></div>
+                  <p>式中，d-表示平均延误，h；ti表示车辆i通过观测路段的时间，h；t-表示自由流条件下，车辆通过观测路段的时间，h；n表示通过观测路段车辆数，veh。</p>
                 </el-tab-pane>
               </el-tabs>
             </div>
@@ -85,7 +88,7 @@
             <el-table-column
               prop="occupancy"
               sortable
-              label="占有率"
+              label="平均延误时间"
               align="center">
             </el-table-column>
           </el-table>
@@ -209,12 +212,17 @@ export default {
     .details {
       margin: 4px;
       padding: 4px;
+      margin-bottom: 10px;
       p {
         // font-family: 楷体;
-        font-size: 18px;
+        font-size: 20px;
       }
-    } 
+    }
+    .index {
+      p {
+        font-size: 20px;
+      }
+    }
   }
-  
 }
 </style>

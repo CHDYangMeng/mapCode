@@ -5,10 +5,10 @@
         <el-form-item label="用户名:" prop="account" class="label_input">
           <el-input type="text" v-model="ruleForm2.account" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码:" prop="password_old" class="label_input">
+        <el-form-item label="原密码:" prop="password_old" class="label_input">
           <el-input type="password" v-model="ruleForm2.password_old" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码:" prop="password" class="label_input">
+        <el-form-item label="新密码:" prop="password" class="label_input">
           <el-input type="password" v-model="ruleForm2.password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item class="btn_login">
@@ -122,7 +122,7 @@ export default {
 }
 .login {
   width: 400px;
-  height: 200px;
+  height: 260px;
   padding: 13px;
   position: absolute;
   left: 50%;
