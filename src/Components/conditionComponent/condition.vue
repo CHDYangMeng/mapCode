@@ -77,6 +77,12 @@
                       <el-card shadow="always">
                         <div class="map_title">
                           路网拥堵里程比例
+                          <el-date-picker
+                            v-model="date_value"
+                            type="date"
+                            placeholder="选择日期">
+                          </el-date-picker>
+                          <el-button type="primary" @click="getStatusData">选择</el-button>
                         </div>
                         <div>
                           <el-row :gutter="24">
@@ -84,13 +90,13 @@
                               <span>畅通</span>
                             </el-col>
                             <el-col :span="8">
-                              <el-progress type="circle" :percentage="0"></el-progress>
+                              <el-progress type="circle" :percentage="changtong"></el-progress>
                             </el-col>
                             <el-col :span="4">
                               <span>基本畅通</span>
                             </el-col>
                             <el-col :span="8">
-                              <el-progress type="circle" :percentage="20"></el-progress>
+                              <el-progress type="circle" :percentage="jibenchangtong"></el-progress>
                             </el-col>
                           </el-row>
                         </div>
@@ -100,13 +106,13 @@
                               <span>轻度拥堵</span>
                             </el-col>
                             <el-col :span="8">
-                              <el-progress type="circle" :percentage="20"></el-progress>
+                              <el-progress type="circle" :percentage="qingduyongdu"></el-progress>
                             </el-col>
                             <el-col :span="4">
                               <span>中度拥堵</span>
                             </el-col>
                             <el-col :span="8">
-                              <el-progress type="circle" :percentage="20"></el-progress>
+                              <el-progress type="circle" :percentage="zhongduyongdu"></el-progress>
                             </el-col>
                           </el-row>
                         </div>
@@ -116,7 +122,7 @@
                               <span>严重拥堵</span>
                             </el-col>
                             <el-col :span="8">
-                              <el-progress type="circle" :percentage="40"></el-progress>
+                              <el-progress type="circle" :percentage="yanzhongyongdu"></el-progress>
                             </el-col>
                           </el-row>
                         </div>
@@ -147,7 +153,15 @@ export default {
       },
       zoom: 3,
 
-      url: 'src/Components/htmlComponent/NetWork.html',
+      date_value: '',
+
+      changtong: 0,
+      jibenchangtong: 0,
+      qingduyongdu: 0,
+      zhongduyongdu: 0,
+      yanzhongyongdu: 0,
+
+      url: 'src/Components/htmlComponent/20180101070000Status.html',
     }
   },
 
@@ -163,6 +177,78 @@ export default {
       this.center.lng = 108.95263;
       this.center.lat = 34.276352;
       this.zoom = 15
+    },
+
+    // 时间转换
+    dateToString(date){ 
+      var year = date.getFullYear(); 
+      var month =(date.getMonth() + 1).toString(); 
+      var day = (date.getDate()).toString();  
+      var hour = (date.getHours()).toString();
+      var minutes = (date.getMinutes()).toString();
+      var seconds = (date.getSeconds()).toString();
+      if (month.length == 1) { 
+          month = "0" + month; 
+      } 
+      if (day.length == 1) { 
+          day = "0" + day; 
+      }
+      if (hour.length == 1) {
+        hour = "0" + hour;
+      }
+      if (minutes.length == 1) {
+        minutes = "0" + minutes;
+      }
+      if (hour.length == 1) {
+        seconds = "0" + seconds;
+      }
+      var dateTime = year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+      return dateTime; 
+    },
+    dateToString2(date){
+      var year = date.getFullYear(); 
+      var month =(date.getMonth() + 1).toString(); 
+      var day = (date.getDate()).toString();  
+      var hour = (date.getHours()).toString();
+      var minutes = (date.getMinutes()).toString();
+      var seconds = (date.getSeconds()).toString();
+      if (month.length == 1) { 
+          month = "0" + month; 
+      } 
+      if (day.length == 1) { 
+          day = "0" + day; 
+      }
+      if (hour.length == 1) {
+        hour = "0" + hour;
+      }
+      if (minutes.length == 1) {
+        minutes = "0" + minutes;
+      }
+      if (hour.length == 1) {
+        seconds = "0" + seconds;
+      }
+      var dateTime = year + month + day + hour + minutes + seconds;
+      return dateTime;
+    },
+    // 获取数据
+    getStatusData() {
+      var time = this.dateToString(this.date_value);
+      console.log(time);
+      this.$http.post('getStatusData', {time:time}).then( result => {
+        console.log(result);
+        if (result.body.status == 200) {
+          this.changtong = parseInt(result.body.changtong);
+          this.jibenchangtong = parseInt(result.body.jibenchangtong);
+          this.qingduyongdu = parseInt(result.body.qingduyongdu);
+          this.zhongduyongdu = parseInt(result.body.zhongduyongdu);
+          this.yanzhongyongdu = parseInt(result.body.yanzhongyongdu);
+        } else {
+
+        }
+        var timeString = dateToString2(this.date_value);
+        var urlPath = "src/Components/htmlComponent/" + timeString + "Status.html";
+        this.url = urlPath;
+      })
     },
   }
 }
